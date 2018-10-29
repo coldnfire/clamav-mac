@@ -56,8 +56,14 @@ sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
 sed -i -e "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/clamav\/clamd.conf/g" freshclam.conf
 }
 
-function install_clamav_deamon
+function clamav_rt
 {
-cp com.clamav_tr.plist /Library/LaunchDaemons/ && chmod 750 com.clamav_tr.plist
-}
+read -P "Inform the path of your home folder : " folder
+sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
 
+read -P "Inform the name of the user : " user
+sed -ie "s/user/user=echo $user/g" clamav-rt.sh
+
+read -P "Inform your email address : " mail
+sed -ie "s/email/email=$mail/g" clamav-rt.sh
+}
