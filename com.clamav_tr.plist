@@ -10,7 +10,7 @@
     <key>Label</key>
     <string>com.clamav_tr</string>
     <key>Program</key>
-    <string>/Users/jv/clamav-tr/clamav-tr.sh</string>
+    <string>path</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>
@@ -22,9 +22,9 @@
     <key>StandardErrorPath</key>
     <string>/tmp/startup.stderr</string>
     <key>UserName</key>
-    <string>admin</string>
+    <string>root</string>
     <key>GroupName</key>
-    <string>admin</string>
+    <string>wheeln</string>
     <key>InitGroups</key>
     <true/>
   </dict>

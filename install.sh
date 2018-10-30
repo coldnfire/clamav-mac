@@ -4,7 +4,6 @@
 #Reporting bug : laboserver@gmail.com
 
 
-
 DIRECTORY=/usr/local/Homebrew
 function install_source ()
 {
@@ -18,7 +17,7 @@ function install_source ()
 	fi
 }
 	
-function install_configuration
+function install_configuration ()
 {
 mkdir -p /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 chown -R clamv:clamv /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
@@ -56,7 +55,7 @@ sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
 sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/clamav\/clamd.conf/g" freshclam.conf
 }
 
-function clamav_rt
+function clamav_rt ()
 {
 read -P "Inform the path of your home folder : " folder
 sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
@@ -68,18 +67,26 @@ read -P "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
 }
 
-function postfix
+function postfix ()
 {
-read -P "Inform your relay host (for example for gmail will be smtp.gmail.com:587) : " relayhost 
+cd /etc/postfix/ && touch sasl_password
+
+read -P "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost 
 read -P "Inform your email address : " email
 read -s -p "Inform your email password ? " password
-relayhost=$relayhost
-smtp_sasl_auth_enable=yes
-smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd
-smtp_use_tls=yes
-smtp_tls_security_level=encrypt
-tls_random_source=dev:/dev/urandom
-smtp_sasl_security_options = noanonymous
-smtp_always_send_ehlo = yes
-smtp_sasl_mechanism_filter = plain
+
+relayhost="relayhost=$relayhost"
+smtp_sasl_auth_enable="smtp_sasl_auth_enable=yes"
+smtp_sasl_password_maps="smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd"
+smtp_use_tls="smtp_use_tls=yes"
+smtp_tls_security_level="smtp_tls_security_level=encrypt"
+tls_random_source="tls_random_source=dev:/dev/urandom"
+smtp_sasl_security_options="smtp_sasl_security_options=noanonymous"
+smtp_always_send_ehlo="smtp_always_send_ehlo=yes"
+smtp_sasl_mechanism_filter="smtp_sasl_mechanism_filter=plain"
+
+for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tls $smtp_tls_security_level $tls_random_source $smtp_sasl_security_options $smtp_always_send_ehlo $mtp_sasl_mechanism_filter
+do
+   echo "$i" >> main.cf
+done
 }
