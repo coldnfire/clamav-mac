@@ -3,6 +3,7 @@
 # Maintainer : coldnfire, laboserver@gmail.com
 # Script "ClamAV real time", by coldnfire
 # Dependency : fswatch
+# Google calandar
  
 FOLDER=
 user=
