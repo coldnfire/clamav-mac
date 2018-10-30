@@ -4,10 +4,11 @@
 # Script "ClamAV real time", by coldnfire
 # Dependency : fswatch
 # Google calandar
+# add popup
  
-FOLDER=
+folder=
 user=
-QUARANTAINE=/var/jail/
+jail=/var/jail/
 email=$email
 
 /usr/local/sbin/clamd
@@ -17,11 +18,11 @@ while :
 do
  
 fswatch -l 1 $FOLDER |
-while read FICHIER; do
-	clamdscan -m -v --fdpass "$FICHIER" --move=$QUARANTAINE
+while read file; do
+	clamdscan -m -v --fdpass "$file" --move=$jail
         if [ "$?" == "1" ]; then
-		echo -e "\033[31mMalware found!!!\033[00m" "File '$FICHIER' file has been mooved to jail !"
-		echo -e "Malware found" "File '$FICHIER' has been mooved to jail" | mail -s "$user" $email
+		echo -e "\033[31mMalware found!!!\033[00m" "File '$file' file has been mooved to jail !"
+		echo -e "Malware found" "File '$file' has been mooved to jail" | mail -s "$user" $email
         fi
 	done
 done
