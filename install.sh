@@ -61,7 +61,7 @@ function clamav_rt
 read -P "Inform the path of your home folder : " folder
 sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
 
-read -P "Inform the name of the user : " user
+read -P "Inform the name of your user : " user
 sed -ie "s/user/user=echo $user/g" clamav-rt.sh
 
 read -P "Inform your email address : " mail
@@ -70,4 +70,5 @@ sed -ie "s/email/email=$mail/g" clamav-rt.sh
 
 function postfix
 {
+
 }
