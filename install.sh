@@ -7,14 +7,25 @@
 DIRECTORY=/usr/local/Homebrew
 function install_source ()
 {
-	if [ -d "$DIRECTORY" ]; then
-		brew install clamav		
-		brew install fswatch
-	else
-		/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-		brew install clamav
-		brew install fswatch
-	fi
+program=("brew" "clamd")
+i=0
+
+for list in "${program[@]}"
+do
+        i+=1
+        if ! [ -x "$(command -v $list)" ]; then
+        echo "$list is not installed." >&2
+        read -P "Do you want install $list (y/n) : " answer
+                if [ "$i == 1" ] && [ "$answer==y" ]; then
+                        echo "Installation of brew in progress !"
+                        /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+                else
+                        brew install clamav
+                fi
+        else
+        echo "$list installed !"
+        fi
+done
 }
 	
 function install_configuration ()
