@@ -4,7 +4,6 @@
 #Reporting bug : laboserver@gmail.com
 
 
-DIRECTORY=/usr/local/Homebrew
 function install_source ()
 {
 program=("brew" "clamd")
