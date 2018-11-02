@@ -15,7 +15,7 @@ do
         if ! [ -x "$(command -v $list)" ]; then
        		echo "$list is not installed." >&2
         	read -P "Do you want install $list (y/n) : " answer
-                if [ "$i == 1" ] && [ "$answer==y" ]; then
+       		if [ "$i == 1" ] && [ "$answer==y" ]; then
                         echo "Installation of brew in progress !"
                         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
                 else
