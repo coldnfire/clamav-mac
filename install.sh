@@ -3,7 +3,29 @@
 #Maintainer : coldnfire
 #Reporting bug : laboserver@gmail.com
 
+                ..:::::::::..
+           ..:::aad8888888baa:::..
+        .::::d:?88888888888?::8b::::.
+      .:::d8888:?88888888??a888888b:::.
+    .:::d8888888a8888888aa8888888888b:::.
+   ::::dP::::::::88888888888::::::::Yb::::
+  ::::dP:::::::::Y888888888P:::::::::Yb::::
+ ::::d8:::::::::::Y8888888P:::::::::::8b::::
+.::::88::::::::::::Y88888P::::::::::::88::::.
+:::::Y8baaaaaaaaaa88P:T:Y88aaaaaaaaaad8P:::::
+:::::::Y88888888888P::|::Y88888888888P:::::::
+::::::::::::::::888:::|:::888::::::::::::::::
+`:::::::::::::::8888888888888b::::::::::::::'
+ :::::::::::::::88888888888888::::::::::::::
+  :::::::::::::d88888888888888:::::::::::::
+   ::::::::::::88::88::88:::88::::::::::::
+    `::::::::::88::88::88:::88::::::::::'
+      `::::::::88::88::P::::88::::::::'
+        `::::::88::88:::::::88::::::'
+           ``:::::::::::::::::::''
+                ``:::::::::''
 
+path=pwd
 function install_source ()
 {
 program=("brew" "clamd")
@@ -14,7 +36,7 @@ do
         i+=1
         if ! [ -x "$(command -v $list)" ]; then
        		echo "$list is not installed." >&2
-        	read -P "Do you want install $list (y/n) : " answer
+        	read -P "You have to instal install $list. Do you want to install now ? (y/n) : " answer
        		if [ "$i == 1" ] && [ "$answer==y" ]; then
                         echo "Installation of brew in progress !"
                         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -67,6 +89,7 @@ sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/cl
 
 function clamav_rt ()
 {
+cd $path
 read -P "Inform the path of your home folder : " folder
 sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
 
@@ -82,7 +105,6 @@ function postfix ()
 cd /etc/postfix/ && touch sasl_password
 
 read -P "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost 
-read -P "Inform your email address : " email
 read -s -p "Inform your email password ? " password
 
 relayhost="relayhost=$relayhost"
@@ -99,4 +121,9 @@ for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tl
 do
    echo "$i" >> main.cf
 done
+}
+
+function devil ()
+{
+
 }
