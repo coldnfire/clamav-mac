@@ -29,7 +29,7 @@ path=pwd
 
 
 ROOT_UID=0   # Root has $UID 0.
-ST_USER="id -u | whoami"
+ST_USER=$(id -F 501)
 if [ "$UID" -eq "$ROOT_UID" ]  # Will the real "root" please stand up?
 then
 	echo "You are root... It is not what i was expect."
