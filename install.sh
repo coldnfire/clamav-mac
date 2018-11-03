@@ -50,7 +50,7 @@ do
         i+=1
         if ! [ -x "$(command -v $list)" ]; then
        		echo "$list is not installed." >&2
-        	read -P "You have to instal install $list. Do you want to install now ? (y/n) : " answer
+        	read -p "You have to instal install $list. Do you want to install now ? (y/n) : " answer
        		if [ "$i==1" ] && [ "$answer==y" ]; then
                         echo "Installation of brew in progress !"
                         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
@@ -111,20 +111,20 @@ sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/cl
 
 # Configuration clamav_rt.sh
 cd $path
-read -P "Inform the path of your home folder : " folder
+read -p "Inform the path of your home folder : " folder
 sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
 
-read -P "Inform the name of your user : " user
+read -p "Inform the name of your user : " user
 sed -ie "s/user/user=echo $user/g" clamav-rt.sh
 
-read -P "Inform your email address : " mail
+read -p "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
 
 
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_password
 
-read -P "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost 
+read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost 
 read -s -p "Inform your email password ? " password
 
 relayhost="relayhost=$relayhost"
