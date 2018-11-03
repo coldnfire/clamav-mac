@@ -29,12 +29,13 @@ path=pwd
 
 
 ROOT_UID=0   # Root has $UID 0.
-ST_USER=$(id -F 501)
+SW_USER=$(id -F 501)
 if [ "$UID" -eq "$ROOT_UID" ]  # Will the real "root" please stand up?
 then
 	echo "You are root... It is not what i was expect."
 	echo "Connection with your standart user in progress."
-	su - $ST_USER
+	su $SW_USER ./install.sh
+	exit 130
 else
   echo "You are just an ordinary user (but mom loves you just the same)."
 fi
@@ -50,7 +51,7 @@ do
         if ! [ -x "$(command -v $list)" ]; then
        		echo "$list is not installed." >&2
         	read -P "You have to instal install $list. Do you want to install now ? (y/n) : " answer
-       		if [ "$i == 1" ] && [ "$answer==y" ]; then
+       		if [ "$i==1" ] && [ "$answer==y" ]; then
                         echo "Installation of brew in progress !"
                         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
                 elif [ "$i==2" ] && [ "$answer==y" ]; then
@@ -67,10 +68,12 @@ do
         echo "$list installed !"
         fi
 done
-}
+
+echo "Your password is necessary now to install the rest of the program"
+sudo su ./install.sh configuration
+exit 130
 	
-function install_configuration ()
-{
+configuration () {
 mkdir -p /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 cd /var/lib/clamav/ && touch whitelist.ign2
@@ -105,10 +108,8 @@ sed -ie "s/#PidFile \/var\/run\/freshclam.pid/PidFile \/var\/run\/freshclam\/fre
 sed -ie 's/#DatabaseOwner clamav/DatabaseOwner clamav/g' freshclam.conf
 sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
 sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/clamav\/clamd.conf/g" freshclam.conf
-}
 
-function clamav_rt ()
-{
+# Configuration clamav_rt.sh
 cd $path
 read -P "Inform the path of your home folder : " folder
 sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
@@ -118,10 +119,9 @@ sed -ie "s/user/user=echo $user/g" clamav-rt.sh
 
 read -P "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
-}
 
-function postfix ()
-{
+
+# Configuration postfix
 cd /etc/postfix/ && touch sasl_password
 
 read -P "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost 
@@ -141,9 +141,6 @@ for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tl
 do
    echo "$i" >> main.cf
 done
-}
 
-function devil ()
-{
-
+#Configuration Daemon
 }
