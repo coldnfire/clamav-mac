@@ -1,5 +1,8 @@
 #! /bin/bash
 
+#Maintainer : coldnfire
+#Reporting bug : laboserver@gmail.com
+
 mkdir -p /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 cd /var/lib/clamav/ && touch whitelist.ign2
