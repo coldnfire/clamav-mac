@@ -37,10 +37,8 @@ sed -ie 's/#LogFileMaxSize 2M/LogFileMaxSize 2M/g' freshclam.conf
 sed -ie 's/#LogTime yes/LogTime yes/g' freshclam.conf
 sed -ie 's/#LogVerbose yes/LogVerbose yes/g' freshclam.conf
 sed -ie 's/#LogRotate yes/LogRotate yes/g' freshclam.conf
-sed -ie "s/#PidFile \/var\/run\/freshclam.pid/PidFile \/var\/run\/freshclam\/freshclam.pid/g" freshclam.conf
 sed -ie 's/#DatabaseOwner clamav/DatabaseOwner clamav/g' freshclam.conf
 sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
-sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/clamav\/clamd.conf/g" freshclam.conf
 
 # Configuration clamav_rt.sh
 mkdir -p /var/root/.clamav/

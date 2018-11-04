@@ -11,6 +11,7 @@ user=
 jail=/var/jail/
 email=$email
 
+freshclam
 /usr/local/sbin/clamd
 postfix start
  
