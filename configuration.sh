@@ -3,6 +3,9 @@
 #Maintainer : coldnfire
 #Reporting bug : laboserver@gmail.com
 
+SW_USER=$(id -F 501)
+path=$(pwd)
+
 mkdir -p /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
 cd /var/lib/clamav/ && touch whitelist.ign2
@@ -40,11 +43,7 @@ sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/cl
 
 # Configuration clamav_rt.sh
 cd $path
-read -p "Inform the path of your home folder : " folder
-sed -ie "s/FOLDER/FOLDER=$folder/g" clamav-rt.sh
-
-read -p "Inform the name of your user : " user
-sed -ie "s/user/user=echo $user/g" clamav-rt.sh
+sed -ie "s/FOLDER/FOLDER=/home/$SW_USER/g" clamav-rt.sh
 
 read -p "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
@@ -65,10 +64,13 @@ tls_random_source="tls_random_source=dev:/dev/urandom"
 smtp_sasl_security_options="smtp_sasl_security_options=noanonymous"
 smtp_always_send_ehlo="smtp_always_send_ehlo=yes"
 smtp_sasl_mechanism_filter="smtp_sasl_mechanism_filter=plain"
+sasl_password="$relayhost $email:$password"
 
-for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tls $smtp_tls_security_level $tls_random_source $smtp_sasl_security_options $smtp_always_send_ehlo $mtp_sasl_mechanism_filter
+for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tls $smtp_tls_security_level $tls_random_source $smtp_sasl_security_options $smtp_always_send_ehlo $mtp_sasl_mechanism_filter 
 do
    echo "$i" >> main.cf
 done
+
+echo "$sasl_password" >> sasl_password
 
 #Configuration Daemon
