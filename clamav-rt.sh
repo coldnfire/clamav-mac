@@ -4,7 +4,7 @@
 # Script "ClamAV real time", by coldnfire
 # Dependency : fswatch, postfix
 # Google calandar
-# add popup
+# Add popup
  
 folder=
 user=
