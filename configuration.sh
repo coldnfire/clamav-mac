@@ -45,7 +45,8 @@ mkdir -p /var/root/.clamav/
 chown 700 /var/root/.clamav/
 
 cd $path
-sed -ie "s/folder/folder=/home/$SW_USER/g" clamav-rt.sh
+read -s -p "Inform your address email ? " mail
+sed -ie "s/folder/folder=\/home\/$SW_USER/g" clamav-rt.sh
 read -p "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
 chmod 700 clamav-rt.sh
