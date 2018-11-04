@@ -56,6 +56,7 @@ cp clamav-rt.sh /var/root/.clamav/
 
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_passwd
+chmod 600 sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
 read -s -p "Inform your email password ? " sasl_passwd
