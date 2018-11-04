@@ -18,7 +18,7 @@ postfix start
 while :
 do
  
-fswatch -l 1 $FOLDER |
+fswatch -l 1 $folder |
 while read file; do
 	clamdscan -m -v --fdpass "$file" --move=$jail
         if [ "$?" == "1" ]; then
