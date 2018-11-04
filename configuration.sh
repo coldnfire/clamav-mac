@@ -27,8 +27,8 @@ sed -ie "s/#DatabaseDirectory \/var\/lib\/clamav/DatabaseDirectory \/var\/lib\/c
 sed -ie "s/#LocalSocket \/tmp\/clamd.socket/LocalSocket \/usr\/local\/var\/run\/clamd.sock/g" clamd.conf
 sed -ie 's/#LocalSocketMode 660/LocalSocketMode 660/g' clamd.conf
 sed -ie 's/#TCPSocket 3310/TCPSocket 3310/g' clamd.conf
-sed -ie 's/#MaxThreads 2/MaxThreads 2/g' clamd.conf
-sed -ie 's/#MaxDirectoryRecursion 1/MaxDirectoryRecursion 1/g' clamd.conf
+sed -ie 's/#MaxThreads 20/MaxThreads 1/g' clamd.conf
+sed -ie 's/#MaxDirectoryRecursion 20/MaxDirectoryRecursion 1/g' clamd.conf
 
 sed -ie 's/Example/#Example/g' freshclam.conf
 sed -ie "s/#DatabaseDirectory \/var\/lib\/clamav/DatabaseDirectory \/var\/lib\/clamav/g" freshclam.conf
