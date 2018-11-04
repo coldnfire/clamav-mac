@@ -85,7 +85,7 @@ cd $path
 chmod 644 com.clamav_tr.plist
 sed -ie 's/<string>path<\/string>/<string>\/var\/root\/.clamav\/clamav-rt.sh<\/string>/g' com.clamav_tr.plist
 cp com.clamav_tr.plist /Library/LaunchDaemons/
-launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
 launchctl start -w /Library/LaunchDaemons/com.clamav_tr.plist
+launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
 
 echo "Bye"
