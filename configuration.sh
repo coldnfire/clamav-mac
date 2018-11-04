@@ -6,6 +6,7 @@
 SW_USER=$(id -F 501)
 path=$(pwd)
 
+# Configuration folder, fix law && configuration
 mkdir -p /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/jail/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ 
 chmod 700 /var/jail/
@@ -45,19 +46,20 @@ mkdir -p /var/root/.clamav/
 chown 700 /var/root/.clamav/
 
 cd $path
-read -s -p "Inform your address email ? " mail
-sed -ie "s/folder/folder=\/home\/$SW_USER/g" clamav-rt.sh
+read -p "Inform your address email : " mail
+sed -ie "s/folder=/folder=\/home\/$SW_USER/g" clamav-rt.sh
 read -p "Inform your email address : " mail
-sed -ie "s/email/email=$mail/g" clamav-rt.sh
+sed -ie "s/email=/email=$mail/g" clamav-rt.sh
+sed -ie "s/user=/user=$SW_USER/g" clamav-rt.sh
 chmod 700 clamav-rt.sh
 
 cp clamav-rt.sh /var/root/.clamav/
 
 # Configuration postfix
-cd /etc/postfix/ && touch sasl_password
+cd /etc/postfix/ && touch sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
-read -s -p "Inform your email password ? " password
+read -s -p "Inform your email password ? " sasl_passwd
 
 relayhost="relayhost=$relayhost"
 smtp_sasl_auth_enable="smtp_sasl_auth_enable=yes"
@@ -68,14 +70,14 @@ tls_random_source="tls_random_source=dev:/dev/urandom"
 smtp_sasl_security_options="smtp_sasl_security_options=noanonymous"
 smtp_always_send_ehlo="smtp_always_send_ehlo=yes"
 smtp_sasl_mechanism_filter="smtp_sasl_mechanism_filter=plain"
-sasl_password="$relayhost $email:$password"
+sasl_password="$relayhost $mail:$sasl_passwd"
 
-for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tls $smtp_tls_security_level $tls_random_source $smtp_sasl_security_options $smtp_always_send_ehlo $mtp_sasl_mechanism_filter 
+for i in $relayhost $smtp_sasl_auth_enable $smtp_sasl_password_maps $smtp_use_tls $smtp_tls_security_level $tls_random_source $smtp_sasl_security_options $smtp_always_send_ehlo $smtp_sasl_mechanism_filter 
 do
    echo "$i" >> main.cf
 done
 
-echo "$sasl_password" >> sasl_password
+echo "$sasl_password" >> sasl_passwd
 
 #Configuration Daemon
 cd $path
