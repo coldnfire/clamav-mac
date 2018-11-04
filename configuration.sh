@@ -48,7 +48,6 @@ chown 700 /var/root/.clamav/
 cd $path
 read -p "Inform your address email : " mail
 sed -ie "s/folder=/folder=\/home\/$SW_USER/g" clamav-rt.sh
-read -p "Inform your email address : " mail
 sed -ie "s/email=/email=$mail/g" clamav-rt.sh
 sed -ie "s/user=/user=$SW_USER/g" clamav-rt.sh
 chmod 700 clamav-rt.sh
@@ -60,6 +59,7 @@ cd /etc/postfix/ && touch sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
 read -s -p "Inform your email password ? " sasl_passwd
+
 
 relayhost="relayhost=$relayhost"
 smtp_sasl_auth_enable="smtp_sasl_auth_enable=yes"
@@ -78,6 +78,7 @@ do
 done
 
 echo "$sasl_password" >> sasl_passwd
+sed -ie 's/relayhost=//g' sasl_passwd
 
 #Configuration Daemon
 cd $path
@@ -85,7 +86,6 @@ cd $path
 chmod 644 com.clamav_tr.plist
 sed -ie 's/<string>path<\/string>/<string>\/var\/root\/.clamav\/clamav-rt.sh<\/string>/g' com.clamav_tr.plist
 cp com.clamav_tr.plist /Library/LaunchDaemons/
-launchctl start -w /Library/LaunchDaemons/com.clamav_tr.plist
 launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
 
 echo "Bye"
