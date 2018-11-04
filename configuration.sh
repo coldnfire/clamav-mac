@@ -6,13 +6,13 @@
 SW_USER=$(id -F 501)
 path=$(pwd)
 
-mkdir -p /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/ /var/jail/
-chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
+mkdir -p /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/jail/
+chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ 
 chmod 700 /var/jail/
 cd /var/lib/clamav/ && touch whitelist.ign2
 
 cd /usr/local/etc/clamav/
-cp freshclam.conf.example freshclam.conf && cp clamd.conf.example clamd.conf
+cp freshclam.conf.sample freshclam.conf && cp clamd.conf.sample clamd.conf
 
 cd /usr/local/etc/clamav/
 sed -ie 's/Example/#Example/g' clamd.conf
@@ -45,7 +45,7 @@ mkdir -p /var/root/.clamav/
 chown 700 /var/root/.clamav/
 
 cd $path
-sed -ie "s/FOLDER/FOLDER=/home/$SW_USER/g" clamav-rt.sh
+sed -ie "s/folder/folder=/home/$SW_USER/g" clamav-rt.sh
 read -p "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
 chmod 700 clamav-rt.sh

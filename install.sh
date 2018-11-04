@@ -22,17 +22,17 @@ i=0
 
 for list in "${program[@]}"
 do
-        i+=1
+        ((i++))
         if ! [ -x "$(command -v $list)" ]; then
        		echo "$list is not installed." >&2
         	read -p "You have to instal install $list. Do you want to install now ? (y/n) : " answer
-       		if [ "$i==1" ] && [ "$answer==y" ]; then
+       		if [ $i = "1" ] && [ $answer = "y" ]; then
                         echo "Installation of brew in progress !"
                         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-                elif [ "$i==2" ] && [ "$answer==y" ]; then
+                elif [ $i = "2" ] && [ $answer = "y" ]; then
 			echo "Installation of clamav in progress !"
                         brew install clamav
-		elif [ "$i==3" ] && [ "$answer==y"]; then
+		elif [ $i = "3" ] && [ $answer = "y" ]; then
 			echo "Installation of fswatch in progress !"
 			brew install fswatch
 		else
