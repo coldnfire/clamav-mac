@@ -6,8 +6,9 @@
 SW_USER=$(id -F 501)
 path=$(pwd)
 
-mkdir -p /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
+mkdir -p /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/ /var/jail/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/run/freshclam/
+chmod 700 /var/jail/
 cd /var/lib/clamav/ && touch whitelist.ign2
 
 cd /usr/local/etc/clamav/
@@ -42,12 +43,16 @@ sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
 sed -ie "s/#NotifyClamd \/path\/to\/clamd.conf/NotifyClamd \/usr\/local\/etc\/clamav\/clamd.conf/g" freshclam.conf
 
 # Configuration clamav_rt.sh
+mkdir -p /var/root/.clamav/
+chown 700 /var/root/.clamav/
+
 cd $path
 sed -ie "s/FOLDER/FOLDER=/home/$SW_USER/g" clamav-rt.sh
-
 read -p "Inform your email address : " mail
 sed -ie "s/email/email=$mail/g" clamav-rt.sh
+chmod 700 clamav-rt.sh
 
+cp clamav-rt.sh /var/root/.clamav/
 
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_password
@@ -74,3 +79,12 @@ done
 echo "$sasl_password" >> sasl_password
 
 #Configuration Daemon
+cd $path
+
+chmod 644 com.clamav_tr.plist
+sed -ie 's/<string>path<\/string>/<string>\/var\/root\/.clamav\/clamav-rt.sh<\/string>/g' com.clamav_tr.plist
+cp com.clamav_tr.plist /Library/LaunchDaemons/
+launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
+launchctl start -w /Library/LaunchDaemons/com.clamav_tr.plist
+
+echo "Bye"
