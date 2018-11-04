@@ -9,7 +9,7 @@
 folder=
 user=
 jail=/var/jail/
-email=$email
+email=
 
 freshclam
 /usr/local/sbin/clamd

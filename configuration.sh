@@ -46,10 +46,10 @@ mkdir -p /var/root/.clamav/
 chown 700 /var/root/.clamav/
 
 cd $path
-read -p "Inform your address email : " mail
-sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav-rt.sh
-sed -ie "s/email=/email=$mail/g" clamav-rt.sh
 sed -ie "s/user=/user=$SW_USER/g" clamav-rt.sh
+sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav-rt.sh
+read -p "Inform your address email : " mail
+sed -ie "s/email=/email=$mail/g" clamav-rt.sh
 chmod 700 clamav-rt.sh
 
 cp clamav-rt.sh /var/root/.clamav/
