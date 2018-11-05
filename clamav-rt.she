@@ -6,7 +6,7 @@
 # Google calandar
 # Add popup
  
-folder=/Users/jv
+folder=
 user=jv
 jail=/var/jail/
 email=
