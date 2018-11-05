@@ -6,9 +6,9 @@
 # Google calandar
 # Add popup
  
-folder=/Users/jv
-user=jv
-jail=/var/jail/
+folder=
+user=
+jail=
 email=
 
 freshclam
