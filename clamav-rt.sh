@@ -22,7 +22,7 @@ fswatch -l 1 $folder |
 while read file; do
 	clamdscan -m -v --fdpass "$file" --move=$jail
         if [ "$?" == "1" ]; then
-		echo -e "\033[31mMalware found!!!\033[00m" "File '$file' file has been mooved to jail !"
+		echo -e "Malware found!!!" "File '$file' file has been mooved to jail !" >> /var/log/clamav/jail.log
 		echo -e "Malware found" "File '$file' has been mooved to jail" | mail -s "$user" $email
         fi
 	done

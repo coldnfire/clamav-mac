@@ -13,6 +13,7 @@ mkdir -p /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/jail/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ 
 chmod 700 /var/jail/
 cd /var/lib/clamav/ && touch whitelist.ign2
+cd /var/log/clamav/ && touch jail.log
 
 cd /usr/local/etc/clamav/
 cp freshclam.conf.sample freshclam.conf && cp clamd.conf.sample clamd.conf
