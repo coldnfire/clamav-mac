@@ -10,7 +10,7 @@
     <key>Label</key>
     <string>com.clamav_tr</string>
     <key>Program</key>
-    <string>path</string>
+    <string>/var/root/.clamav/clamav-rt.sh</string>
     <key>RunAtLoad</key>
     <true/>
     <key>KeepAlive</key>

@@ -1,9 +1,11 @@
-#! /bin/bash
+#!/bin/bash
 
 #Maintainer : coldnfire
 #Reporting bug : laboserver@gmail.com
 
 SW_USER=$(id -F 501)
+SW_USER=$(echo $SW_USER | tr -d ' ')
+SW_USER=$(echo $SW_USER | tr [:upper:] [:lower:]) ;
 path=$(pwd)
 
 # Configuration folder, fix law && configuration
@@ -50,6 +52,7 @@ sed -ie "s/user=/user=$SW_USER/g" clamav-rt.sh
 sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav-rt.sh
 read -p "Inform your address email : " mail
 sed -ie "s/email=/email=$mail/g" clamav-rt.sh
+sed -ie "s/jail=/jail=\/var\/jail\/g" clamav-rt.sh
 chmod 700 clamav-rt.sh
 
 cp clamav-rt.sh /var/root/.clamav/
@@ -57,6 +60,7 @@ cp clamav-rt.sh /var/root/.clamav/
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_passwd
 chmod 600 sasl_passwd
+postmap /etc/postfix/sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
 read -s -p "Inform your email password ? " sasl_passwd

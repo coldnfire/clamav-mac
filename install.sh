@@ -11,6 +11,9 @@ path=$(pwd)
 
 ROOT_UID=0 
 SW_USER=$(id -F 501)
+SW_USER=$(echo ${SW_USER} | tr -d ' ') ;
+SW_USER=$(echo $SW_USER | tr [:upper:] [:lower:]) ;
+
 if [ "$UID" -eq "$ROOT_UID" ]  # Will the real "root" please stand up?
 then
 	echo -e "🔥 ${RED}You are log in root... It is not what i was expect.${NC}\n"
@@ -29,7 +32,7 @@ do
         ((i++))
         if ! [ -x "$(command -v $list)" ]; then
        		echo -e "🔥 ${PURPLE}$list is not installed.${NC}\n" >&2
-        	read -p -e "🔥 ${PURPLE}You have to instal install $list. Do you want to install now ? (y/n) :${NC}\n " answer
+        	read -p "🔥 You have to instal install $list. Do you want to install now ? (y/n) : " answer
        		if [ $i = "1" ] && [ $answer = "y" ]; then
                         echo -e "⚡️ ${GREEN}Installation of brew in progress !${NC}\n"
                         /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
