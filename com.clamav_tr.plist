@@ -18,9 +18,9 @@
     <key>LaunchOnlyOnce</key>        
     <true/>
     <key>StandardOutPath</key>
-    <string>/tmp/startup.stdout</string>
+    <string>/tmp/clamav_tr.stdout</string>
     <key>StandardErrorPath</key>
-    <string>/tmp/startup.stderr</string>
+    <string>/tmp/clamav_tr.stderr</string>
     <key>UserName</key>
     <string>root</string>
     <key>GroupName</key>
