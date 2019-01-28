@@ -9,7 +9,7 @@ logfile="/var/log/clamav/clamscan-$(date +'%Y-%m-%d').log";
 email_msg="Malware found !!!"
 email=
 folder=
-jail=/var/jail/
+jail=
 mac=$(ifconfig en0 | grep -o -E '([[:xdigit:]]{1,2}:){5}[[:xdigit:]]{1,2}');
 log_path=/var/log/clamav/
 retention=10
@@ -17,19 +17,12 @@ retention=10
 freshclam
 postfix start
 
-function clean_log_file() {
-  local dir=$1 retention=$2
-
-  ## Deleting old defined log file
-  find ${log_path} -mtime +${retention} -type f -delete
-}
-
 for S in ${folder}; do
 	
 	DIRSIZE=$(du -sh "$S" 2>/dev/null | cut -f1);
 	
-	#Launch the deleting function
-	clean_log_file ${log_path} ${retention}
+	#Log rotate
+	find ${log_path} -mtime +${retention} -type f -delete
 	
 	clamscan -ri "$S" >> "$logfile"
 

@@ -55,8 +55,9 @@ read -p "Inform your address email : " mail
 sed -ie "s/email=/email=$mail/g" clamav_rt.sh
 sed -ie "s/jail=/jail=\/var\/jail\/g" clamav_rt.sh
 
+# Configuration clamav_cron.sh
 sed -ie "s/user=/user=$SW_USER/g" clamav_cron.sh
-sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav_cron.sh
+sed -ie "s/folder=/folder=\/Users\/$SW_USER/\ /Applications/g" clamav_cron.sh
 sed -ie "s/email=/email=$mail/g" clamav_cron.sh
 sed -ie "s/jail=/jail=\/var\/jail\/g" clamav_cron.sh
 
@@ -95,10 +96,47 @@ sed -ie 's/relayhost=//g' sasl_passwd
 
 #Configuration Daemon
 cd $path
-
-chmod 644 com.clamav_tr.plist
-sed -ie 's/<string>path<\/string>/<string>\/var\/root\/.clamav\/clamav_rt.sh<\/string>/g' com.clamav_tr.plist
 cp com.clamav_tr.plist /Library/LaunchDaemons/
-launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
+cp com.clamav_cron.plist /Library/LaunchDaemons/
+chmod 644 com.clamav_tr.plist
+chmod 644 com.clamav_cron.plist
+
+while [ "$yn" != "Yes" ]; do
+        echo "Choose your type of installation"
+        echo "1) Install Clamav Real Time"
+        echo "2) Install Clamav Crontab"
+        echo "3) Install Clamav Real Time and Clamav Crontab"
+        echo "4) exit"
+
+        read case;
+
+        case $case in
+        1) echo "You have entered : Clamav Real Time, is this correct ? (Yes or No)"
+
+        read yn
+
+        	launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
+
+
+
+        2) echo "You have entered : Install Clamav Crontab by Launchd, is this correct? (Yes or No)"
+
+      read yn
+
+                launchctl load -w /Library/LaunchDaemons/com.clamav_cron.plist
+
+
+
+        3) echo "You have entered : install Clamav Crontab by Launchd and install Clamav Real Time, is this correct? (Yes or No)"
+
+      read yn
+
+                launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
+		launchctl load -w /Library/LaunchDaemons/com.clamav_cron.plist
+
+        4) exit
+
+    esac
+done
 
 echo "Bye"
