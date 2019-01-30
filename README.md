@@ -1,24 +1,22 @@
-# clamav-mac
-
 !!! THIS REPOSITORY STAY IN PROGRESS !!!
 
 # Clamav4Mac
 
 The Non-Graphical ClamAV Antivirus Solution for Mac OS X
 
-I wrote this as a free alternative to the excellent ClamXav. MacClam sets up real-time directory monitoring and schedules periodic scans. It uses ClamAV as an AntiVirus engine and fswatch to actively monitor directories for new or changed files, which are then sent to clamd for scanning.
+I wrote this as a free alternative to the excellent ClamXav. Clamav4Mac sets up real-time directory monitoring and schedules periodic scans. It uses ClamAV as an AntiVirus engine and fswatch to actively monitor directories for new or changed files, which are then sent to clamd for scanning.
 
 
 ### Prerequisites
 
-All prerequies will be automatically installed. I have tested MacClam on High Sierra & Mojave , but it may also work in other versions of OS X.
+All prerequies will be automatically installed. I have tested Clamav4Mac on High Sierra & Mojave , but it may also work in other versions of OS X.
 
 ### Virus Scans
 
-MacClam performs three types of scans:
+Clamav4Mac performs three types of scans:
 
 Active monitoring: Clamav4Mac will monitor any directories you specify for activity. When a file is changed or created, it will be scanned immediately. By default, the $HOME and Applications directories are monitored.
-Scheduled scanning: MacClam will perform recursive scans of directories at scheduled times. By default, the entire hard drive is scanned once a week.
+Scheduled scanning: Clamav4Mac will perform recursive scans of directories at scheduled times. By default, the entire hard drive is scanned once a week.
 In all cases, when a virus is found, it is moved to the quarantine folder and an email is send to the administrator.
 
 ### Installing
