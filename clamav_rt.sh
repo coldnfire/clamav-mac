@@ -23,7 +23,7 @@ while read file; do
 	clamdscan -m -v --fdpass "$file" --move=$jail
         if [ "$?" == "1" ]; then
 		echo -e "Malware found!!!" "File '$file' file has been mooved to jail !" >> $logfile
-		echo -e "Malware found" "File '$file' has been mooved to jail, the user is $user with mac address $mac the result of the scan is in $logfile" | mail -s "$user" $email
+		echo -e "Malware found" "File '$file' has been mooved to jail, the user is $user with mac address $mac the result of the scan is in $logfile" | mail -s "$user $mac" $email
         fi
 	done
 done

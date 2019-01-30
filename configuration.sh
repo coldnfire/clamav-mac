@@ -3,21 +3,27 @@
 #Maintainer : coldnfire
 #Reporting bug : laboserver@gmail.com
 
+# Find username
 SW_USER=$(id -F 501)
 SW_USER=$(echo $SW_USER | tr -d ' ')
 SW_USER=$(echo $SW_USER | tr [:upper:] [:lower:]) ;
-path=$(pwd)
+##########
 
-# Configuration folder, fix law && configuration
+# Buffer script
+path=$(pwd)
+##########
+
+# Configuration folder, fix law
 mkdir -p /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ /var/jail/
 chown -R clamav:clamav /usr/local/etc/clamav/ /var/log/clamav/ /var/lib/clamav/ /usr/local/var/run/clamav/ 
 chmod 700 /var/jail/
 cd /var/lib/clamav/ && touch whitelist.ign2
 cd /var/log/clamav/ && touch jail.log
-
 cd /usr/local/etc/clamav/
 cp freshclam.conf.sample freshclam.conf && cp clamd.conf.sample clamd.conf
+##########
 
+# Global program configuration
 cd /usr/local/etc/clamav/
 sed -ie 's/Example/#Example/g' clamd.conf
 sed -ie "s/#LogFile \/tmp\/clamd.log/LogFile \/var\/log\/clamav\/clamd.log/g" clamd.conf
@@ -43,6 +49,7 @@ sed -ie 's/#LogVerbose yes/LogVerbose yes/g' freshclam.conf
 sed -ie 's/#LogRotate yes/LogRotate yes/g' freshclam.conf
 sed -ie 's/#DatabaseOwner clamav/DatabaseOwner clamav/g' freshclam.conf
 sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
+##########
 
 # Configuration clamav_rt.sh
 mkdir -p /var/root/.clamav/
@@ -53,18 +60,19 @@ sed -ie "s/user=/user=$SW_USER/g" clamav_rt.sh
 sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav_rt.sh
 read -p "Inform your address email : " mail
 sed -ie "s/email=/email=$mail/g" clamav_rt.sh
-sed -ie "s/jail=/jail=\/var\/jail\/g" clamav_rt.sh
+sed -ie "s/jail=/jail=\/var\/jail/g" clamav_rt.sh
+cp clamav_rt.sh /var/root/.clamav/
+chmod 700 clamav_rt.sh
+##########
 
 # Configuration clamav_cron.sh
 sed -ie "s/user=/user=$SW_USER/g" clamav_cron.sh
-sed -ie "s/folder=/folder=\/Users\/$SW_USER/\ /Applications/g" clamav_cron.sh
+sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav_cron.sh
 sed -ie "s/email=/email=$mail/g" clamav_cron.sh
-sed -ie "s/jail=/jail=\/var\/jail\/g" clamav_cron.sh
-
-chmod 700 clamav_rt.sh clamav_cron.sh
-
-cp clamav_rt.sh /var/root/.clamav/
+sed -ie "s/jail=/jail=\/var\/jail/g" clamav_cron.sh
 cp clamav_cron.sh /var/root/.clamav/
+chmod 700 clamav_cron.sh
+##########
 
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_passwd
@@ -73,7 +81,6 @@ postmap /etc/postfix/sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
 read -s -p "Inform your email password ? " sasl_passwd
-
 
 relayhost="relayhost=$relayhost"
 smtp_sasl_auth_enable="smtp_sasl_auth_enable=yes"
@@ -93,6 +100,7 @@ done
 
 echo "$sasl_password" >> sasl_passwd
 sed -ie 's/relayhost=//g' sasl_passwd
+##########
 
 #Configuration Daemon
 cd $path
@@ -115,7 +123,7 @@ while [ "$yn" != "Yes" ]; do
 
         read yn
 
-        	launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
+        	launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist;;
 
 
 
@@ -123,7 +131,7 @@ while [ "$yn" != "Yes" ]; do
 
       read yn
 
-                launchctl load -w /Library/LaunchDaemons/com.clamav_cron.plist
+                launchctl load -w /Library/LaunchDaemons/com.clamav_cron.plist;;
 
 
 
@@ -132,11 +140,12 @@ while [ "$yn" != "Yes" ]; do
       read yn
 
                 launchctl load -w /Library/LaunchDaemons/com.clamav_tr.plist
-		launchctl load -w /Library/LaunchDaemons/com.clamav_cron.plist
+		launchctl load -w /Library/LaunchDaemons/com.clamav_cron.plist;;
 
         4) exit
 
     esac
 done
+##########
 
 echo "Bye"
