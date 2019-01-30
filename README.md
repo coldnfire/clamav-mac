@@ -13,10 +13,10 @@ All prerequies will be automatically installed. I have tested Clamav4Mac on High
 
 ### Virus Scans
 
-Clamav4Mac performs three types of scans:
+Clamav4Mac performs two types of scans:
 
-Active monitoring: Clamav4Mac will monitor any directories you specify for activity. When a file is changed or created, it will be scanned immediately. By default, the $HOME and Applications directories are monitored.
-Scheduled scanning: Clamav4Mac will perform recursive scans of directories at scheduled times. By default, the entire hard drive is scanned once a week.
+When a file is changed or created, it will be scanned immediately. By default, the $HOME and Applications directories are monitored.
+Scheduled scanning: Clamav4Mac will perform recursive scans of directories at scheduled times. By default, the entire $HOME and /Application is scanned once a week.
 In all cases, when a virus is found, it is moved to the quarantine folder and an email is send to the administrator.
 
 ### Installing
