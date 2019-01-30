@@ -37,6 +37,32 @@ This will bootstrap Clamav4Mac by building the lastest versions of ClamAV and fs
 
 By default, the installation directory is ~/clamav-mac.
 
+### Directory
+
+Contain all logs of the program
+
+```
+/var/log/clamav
+```
+
+Contain all configuration files
+
+```
+/usr/local/etc/clamav/
+```
+
+Contain all the malware
+
+```
+/var/jail
+```
+
+Contain the script launch by launchd
+
+```
+/var/root/.clamav/
+```
+
 ### Deactivation
 
 With the root user :
@@ -51,7 +77,7 @@ launchctl unload -w /Library/LaunchDaemons/com.clamav_tr.plist
 
 ## Authors
 
-* **coldnfire** - *Initial work* 
+* **coldnfire** 
 
 ## License
 
