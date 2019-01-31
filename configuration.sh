@@ -83,7 +83,6 @@ read -p "Inform sender email for POSTFIX : " mail
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_passwd
 chmod 600 sasl_passwd
-postmap /etc/postfix/sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
 read -s -p "Inform the email sender POSTFIX password ? " sasl_passwd
@@ -106,6 +105,8 @@ done
 
 echo "$sasl_password" >> sasl_passwd
 sed -ie 's/relayhost=//g' sasl_passwd
+
+postmap /etc/postfix/sasl_passwd
 ##########
 
 #Configuration Daemon

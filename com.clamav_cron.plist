@@ -12,11 +12,11 @@
     <key>StartCalendarInterval</key>
     <dict>
       <key>Minute</key>
-      <integer>54</integer>
+      <integer>00</integer>
       <key>Hour</key>
-      <integer>15</integer>
+      <integer>16</integer>
       <key>Weekday</key>
-      <integer>3</integer>
+      <integer>5</integer>
     </dict>
     <key>Program</key>
     <string>/var/root/.clamav/clamav_cron.sh</string>
