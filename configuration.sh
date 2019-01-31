@@ -51,6 +51,10 @@ sed -ie 's/#DatabaseOwner clamav/DatabaseOwner clamav/g' freshclam.conf
 sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
 ##########
 
+# Information mail for script
+read -p "Inform address email for the SCRIPTS: " mail
+##########
+
 # Configuration clamav_rt.sh
 mkdir -p /var/root/.clamav/
 chown 700 /var/root/.clamav/
@@ -58,7 +62,6 @@ chown 700 /var/root/.clamav/
 cd $path
 sed -ie "s/user=/user=$SW_USER/g" clamav_rt.sh
 sed -ie "s/folder=/folder=\/Users\/$SW_USER/g" clamav_rt.sh
-read -p "Inform your address email : " mail
 sed -ie "s/email=/email=$mail/g" clamav_rt.sh
 sed -ie "s/jail=/jail=\/var\/jail/g" clamav_rt.sh
 cp clamav_rt.sh /var/root/.clamav/
@@ -74,13 +77,16 @@ cp clamav_cron.sh /var/root/.clamav/
 chmod 700 clamav_cron.sh
 ##########
 
+# Information Sender Mail
+read -p "Inform sender email for POSTFIX : " mail
+
 # Configuration postfix
 cd /etc/postfix/ && touch sasl_passwd
 chmod 600 sasl_passwd
 postmap /etc/postfix/sasl_passwd
 
 read -p "Inform your relay host (for example gmail relay will be : smtp.gmail.com:587) : " relayhost
-read -s -p "Inform your email password ? " sasl_passwd
+read -s -p "Inform the email sender POSTFIX password ? " sasl_passwd
 
 relayhost="relayhost=$relayhost"
 smtp_sasl_auth_enable="smtp_sasl_auth_enable=yes"

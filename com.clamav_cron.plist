@@ -20,9 +20,5 @@
     </dict>
     <key>Program</key>
     <string>/var/root/.clamav/clamav_cron.sh</string>
-    <key>StandardOutPath</key>
-    <string>/tmp/clamav_cron.stdout</string>
-    <key>StandardErrorPath</key>
-    <string>/tmp/clamav_cron.sterr</string>
   </dict>
 </plist>
