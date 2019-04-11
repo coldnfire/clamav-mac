@@ -29,7 +29,7 @@ sed -ie 's/Example/#Example/g' clamd.conf
 sed -ie "s/#LogFile \/tmp\/clamd.log/LogFile \/var\/log\/clamav\/clamd.log/g" clamd.conf
 sed -ie 's/#LogFileMaxSize 2M/LogFileMaxSize 2M/g' clamd.conf
 sed -ie 's/#LogTime yes/LogTime yes/g' clamd.conf
-sed -ie 's/#LogVerbose yes/LogVerbose yes/g' clamd.conf
+sed -ie 's/#LogVerbose yes/LogVerbose no/g' clamd.conf
 sed -ie 's/#LogRotate yes/LogRotate yes/g' clamd.conf
 sed -ie 's/#ExtendedDetectionInfo yes/ExtendedDetectionInfo yes/g' clamd.conf
 sed -ie "s/#DatabaseDirectory \/var\/lib\/clamav/DatabaseDirectory \/var\/lib\/clamav/g" clamd.conf
@@ -45,7 +45,7 @@ sed -ie "s/#DatabaseDirectory \/var\/lib\/clamav/DatabaseDirectory \/var\/lib\/c
 sed -ie "s/#UpdateLogFile \/var\/log\/freshclam.log/UpdateLogFile \/var\/log\/clamav\/freshclam.log/g" freshclam.conf
 sed -ie 's/#LogFileMaxSize 2M/LogFileMaxSize 2M/g' freshclam.conf
 sed -ie 's/#LogTime yes/LogTime yes/g' freshclam.conf
-sed -ie 's/#LogVerbose yes/LogVerbose yes/g' freshclam.conf
+sed -ie 's/#LogVerbose yes/LogVerbose no/g' freshclam.conf
 sed -ie 's/#LogRotate yes/LogRotate yes/g' freshclam.conf
 sed -ie 's/#DatabaseOwner clamav/DatabaseOwner clamav/g' freshclam.conf
 sed -ie 's/#Checks 24/Checks 3/g' freshclam.conf
