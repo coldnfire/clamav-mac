@@ -1,5 +1,3 @@
-!!! THIS REPOSITORY STAY IN PROGRESS !!!
-
 # Clamav4Mac
 
 The Non-Graphical ClamAV Antivirus Solution for Mac OS X
